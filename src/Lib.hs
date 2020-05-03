@@ -119,7 +119,6 @@ edgerouterConfigurationFrom c = T.unlines $ [
     "set protocol udp",
     "exit",
     "edit protocols static interface-route 10.8.0.1/32",
-    "set description 'in-tunnel dns'",
     "set next-hop-interface wg0",
     "exit",
     "# commit",
