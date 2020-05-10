@@ -1,33 +1,42 @@
 configure
+
 # Wireguard firewalls
 edit firewall name wgIn
+
 set description 'established only'
 set default-action drop
 set rule 10 action accept
 set rule 10 state established enable
 set rule 10 state related enable
 exit
+
 edit firewall name wgLocal
+
 set description 'established only'
 set default-action drop
 set rule 10 action accept
 set rule 10 state established enable
 set rule 10 state related enable
 exit
+
 edit firewall ipv6-name wgIn6
+
 set description 'established only'
 set default-action drop
 set rule 10 action accept
 set rule 10 state established enable
 set rule 10 state related enable
 exit
+
 edit firewall ipv6-name wgLocal6
+
 set description 'established only'
 set default-action drop
 set rule 10 action accept
 set rule 10 state established enable
 set rule 10 state related enable
 exit
+
 # Interfaces
 edit interfaces wireguard wg0
 set description 'mullvad-example.conf'
@@ -38,7 +47,7 @@ set route-allowed-ips false
 set peer 'fake-public-key' endpoint 185.65.134.224:51820
 set peer 'fake-public-key' allowed-ips 0.0.0.0/0
 set peer 'fake-public-key' allowed-ips ::0/0
-set private-key 'fake-private-key'
+set private-key fake-private-key
 set fwmark 190
 set firewall in name wgIn
 set firewall in ipv6-name wgIn6
@@ -54,6 +63,7 @@ set description 'masq mullvad'
 set outbound-interface wg0
 set type masquerade
 exit
+
 # Example of using modify to put traffic into the tunnel route table
 edit firewall modify lanInModify rule 187
 set description 'do not mod wireguard ever'
@@ -75,27 +85,26 @@ edit firewall modify lanInModify rule 190
 set action modify
 set modify table 190
 exit
+
 # apply special routing table by adding modify rules to local network interfaces
 set interfaces switch switch0 firewall in modify lanInModify
 # accept incoming wireguard packets to this host
 edit firewall name wanLocal rule 190
 set action accept
-set description 'accept wireguard'
+set description 'accept wireguard input'
 set destination port 51820
 set protocol udp
 exit
 edit firewall ipv6-name wanLocal6 rule 190
 set action accept
-set description 'accept wireguard'
+set description 'accept wireguard input'
 set destination port 51820
 set protocol udp
 exit
 edit protocols static interface-route 10.8.0.1/32
 set next-hop-interface wg0
 exit
-# commit
-# exit
+# DONE, use commit to commit to current configuration
+# Never run save without testing first!
 ## ipv6 nat is not supported by ubiquity yet
 # sudo ip6tables --table nat --append POSTROUTING --out-interface wg0 -j MASQUERADE
-
-

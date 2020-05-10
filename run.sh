@@ -1,5 +1,4 @@
 #!/bin/bash
 set -e
-stack build
-stack exec mullvad-edgerouter-x-exe mullvad-example.conf | tee mullvad-example_config.txt
-echo "Done running"
+python merc.py mullvad-example.conf
+cat mullvad-example_commands.txt
