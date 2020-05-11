@@ -9,7 +9,7 @@ Usage
 - Download the mullvad edgerouter configuration. You should have a config file that looks like [the example configuration](mullvad-example.conf)
 - Run the python script with your mullvad configuration as an argument
 
-    python merc.py mullvad-nl2.conf
+    python3 merc.py mullvad-nl2.conf
 
 - The script will write out a file where `.conf` is replaced by `_commands.txt` which will contain a list of commands to configure your edgerouter
 - By hand copy and paste all the commands from the commands file into your edgerouter via an SSH terminal, making sure **you understand each and every command**.

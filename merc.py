@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import configparser
 import sys
 from string import Template
@@ -109,7 +109,7 @@ config_template = Template(
 )
 
 
-def main() -> int:
+def main():
     config_file = sys.argv[1]
     print("Reading from:", config_file)
     mullvad_config = configparser.ConfigParser()
